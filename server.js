@@ -1,6 +1,11 @@
-import path from 'path';
-import express from "express";
 import dotenv from "dotenv";
+import path from "path";
+
+dotenv.config({
+    path: path.resolve(process.cwd(), "Backend", ".env")
+});
+
+import express from "express";
 import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth.routes.js";
@@ -10,7 +15,6 @@ import userRoutes from "./routes/user.routes.js";
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import { app, server } from "./socket/socket.js";
 
-dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
