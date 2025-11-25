@@ -1,9 +1,10 @@
+dotenv.config({ path: "./Backend/.env" });
+console.log("MONGO_DB_URI:", process.env.MONGO_DB_URI);
+
 import dotenv from "dotenv";
 import path from "path";
 
-dotenv.config({
-    path: path.resolve(process.cwd(), "Backend", ".env")
-});
+
 
 import express from "express";
 import cookieParser from "cookie-parser";
@@ -37,3 +38,5 @@ server.listen(PORT, () => {
     connectToMongoDB();
     console.log(`server is running on port ${PORT}`);
 });
+
+
