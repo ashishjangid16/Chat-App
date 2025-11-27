@@ -20,7 +20,7 @@ const Message = ({ message }) => {
 					<img alt='User avatar' src={profilePic} />
 				</div>
 			</div>
-			<div className={`chat-bubble text-white text-base ${bubbleBgColor} ${shakeClass} pb-2`}>{message.message}</div>
+			<div className={`chat-bubble text-white text-lg ${bubbleBgColor} ${shakeClass} pb-2`}>{message.message}</div>
 			<div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>{formattedTime}</div>
 		</div>
 	);

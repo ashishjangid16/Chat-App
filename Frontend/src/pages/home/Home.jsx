@@ -3,11 +3,11 @@ import MessageContainer from "../../components/messages/MessageContainer.jsx";
 
 const Home = () => {
 	return (
-		<div className='flex sm:h-[450px] md:h-[550px] gap-4 w-full max-w-6xl mx-auto'>
-			<div className='w-1/3 min-w-[250px] rounded-lg overflow-hidden bg-gray-900 border border-gray-700 shadow-xl'>
+		<div className='flex h-screen w-screen gap-2'>
+			<div className='w-1/3 min-w-[280px] max-w-md bg-gray-900 border-r border-gray-700'>
 				<Sidebar />
 			</div>
-			<div className='flex-1 rounded-lg overflow-hidden bg-gray-900 border border-gray-700 shadow-xl'>
+			<div className='flex-1 bg-gray-900'>
 				<MessageContainer />
 			</div>
 		</div>
