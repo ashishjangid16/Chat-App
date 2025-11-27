@@ -2,44 +2,50 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthContext } from "./Authcontext";
 import io from 'socket.io-client';
 
-export const SocketContext = createContext();
 
-export const useSocketContext=()=>{
-    return useContext(SocketContext);
-}
+// Create the Context
+export const SocketContext = createContext({ socket: null, onlineUsers: [] });
 
-export const SocketContextProvider=({children})=>{
-    const [socket,setSocket]=useState(null);
-    const [onlineUsers,setOnlineUsers]=useState([]);
-    const {authUser}= useAuthContext();
+// Custom Hook with fallback
+export const useSocketContext = () => {
+  return useContext(SocketContext) || { socket: null, onlineUsers: [] };
+};
 
-    useEffect(()=>{
-        if(authUser){
-            const socket=io("http://localhost:5000",{
-                query:{
-                    userId:authUser._id,
-                }
-            });
+// Provider Implementation
+export const SocketContextProvider = ({ children }) => {
+  const [socket, setSocket] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const { authUser } = useAuthContext() || {};
 
-            setSocket(socket);
+  useEffect(() => {
+    // Connect socket only if authUser exists
+    if (authUser && authUser._id) {
+      const socketInstance = io("http://localhost:8000", {
+        query: {
+          userId: authUser._id,
+        },
+      });
 
-            socket.on("getOnlineUsers",(users)=>{
-                setOnlineUsers(users);
-            });
+      setSocket(socketInstance);
 
-            return ()=>socket.close();
-        }
-        else{
-            if(socket){
-                socket.close();
-                setSocket(null);
-            }
-        }
-    },[authUser])
+      socketInstance.on("getOnlineUsers", (users) => {
+        setOnlineUsers(users);
+      });
 
-    return(
-        <SocketContext.Provider value={{socket,onlineUsers}}>
-            {children}
-        </SocketContext.Provider>
-    )
-}
+      return () => socketInstance.close(); // Cleanup
+    } else {
+      // If not logged in, cleanup previous socket
+      if (socket) {
+        socket.close();
+        setSocket(null);
+        setOnlineUsers([]);
+      }
+    }
+  }, [authUser]);
+
+  return (
+    <SocketContext.Provider value={{ socket, onlineUsers }}>
+      {children}
+    </SocketContext.Provider>
+  );
+};

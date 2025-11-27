@@ -1,38 +1,45 @@
-import React, { useState } from 'react'
-import useConversation from '../zustand/useConversation';
-import toast from 'react-hot-toast';
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+import useConversation from "../zustand/useConversation";
 
 const useSendMessages = () => {
-  const [loading,setLoading]=useState(false);
-  const {messages,setMessages,selectedConversation}=useConversation();
+	const [loading, setLoading] = useState(false);
+	const { setMessages, selectedConversation } = useConversation();
 
-  const sendMessage= async(message)=>{
-    setLoading(true)
-    try {
-        const res= await fetch(`/api/messages/send/${selectedConversation._id}`,{
-            method:'POST',
-            headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify({message})
-        })
+	const sendMessage = async (message) => {
+		if (!selectedConversation?._id) {
+			toast.error("Please select a conversation first");
+			return;
+		}
 
-        const data=await res.json()
+		if (!message || !message.trim()) {
+			return;
+		}
 
-        if(data.error) {
-            console.log("error in useSendMessages")
-            throw new Error(data.error)
-        }
+		setLoading(true);
+		try {
+			const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ message }),
+			});
 
-        setMessages([...messages,data]);
+			const data = await res.json();
 
-    } catch (error) {
-        toast.error(error.message)
-    }finally{
-        setLoading(false);
-    }
-  }
+			if (!res.ok) {
+				throw new Error(data.error || "Failed to send message");
+			}
 
-  return {sendMessage,loading};
+			setMessages((prevMessages) => [...prevMessages, data]);
+		} catch (error) {
+			toast.error(error.message);
+		} finally {
+			setLoading(false);
+		}
+	};
 
-}
+	return { sendMessage, loading };
+};
 
-export default useSendMessages
+export default useSendMessages;

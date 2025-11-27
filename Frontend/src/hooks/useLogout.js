@@ -1,38 +1,35 @@
-import React, { useState } from 'react'
-import { useAuthContext } from '../context/Authcontext'
-import toast from 'react-hot-toast';
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+import { useAuthContext } from "../context/Authcontext";
+import { handleJSONResponse } from "../utils/http";
 
 const useLogout = () => {
-  const [loading,setLoading]=useState(false)
-  const {setauthUser}= useAuthContext();
+	const [loading, setLoading] = useState(false);
+	const { setauthUser } = useAuthContext();
 
-  const logout= async()=>{
-    setLoading(true)
+	const logout = async () => {
+		setLoading(true);
 
-    try {
+		try {
+			const res = await fetch("/api/auth/logout", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				credentials: "include",
+			});
 
-        const res=await fetch("/api/auth/logout",{
-            method:"POST",
-            headers:{"Content-Type":"application/json"}
-        });
+			await handleJSONResponse(res, "Unable to logout");
 
-        const data=await res.json();
+			localStorage.removeItem("chat-user");
+			setauthUser(null);
+		} catch (error) {
+			toast.error(error.message);
+		} finally {
+			setLoading(false);
+		}
+	};
 
-        if(data.error){
-            throw new Error(data.error)
-        }
+	return { loading, logout };
+};
 
-        localStorage.removeItem("chat-user");
-        setauthUser(null);
-        
-    } catch (error) {
-        toast.error(error.message)
-    }finally{
-        setLoading(false)
-    }
-  }
-
-  return {loading,logout};
-}
-
-export default useLogout
+export default useLogout;

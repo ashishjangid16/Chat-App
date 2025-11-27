@@ -1,34 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import useConversation from '../zustand/useConversation'
-import toast from 'react-hot-toast';
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+import useConversation from "../zustand/useConversation";
 
 const useGetMessages = () => {
-   const [loading,setLoading]=useState(false)
-   const {messages,setMessages,selectedConversation}=useConversation();
+	const [loading, setLoading] = useState(false);
+	const { messages, setMessages, selectedConversation } = useConversation();
 
-   useEffect(()=>{
-    const getMessages=async()=>{
-        setLoading(true)
-        try {
-            const res= await fetch(`/api/messages/${selectedConversation._id}`);
+	useEffect(() => {
+		if (!selectedConversation?._id) {
+			return;
+		}
 
-            const data= await res.json();
+		const controller = new AbortController();
 
-            if(data.error) throw new Error(data.error)
-            
-            setMessages(data)
-        } catch (error) {
-            toast.error(error.message)
-        }finally{
-            setLoading(false)
-        }
-    };
+		const getMessages = async () => {
+			setLoading(true);
+			try {
+				const res = await fetch(`/api/messages/${selectedConversation._id}`, {
+					signal: controller.signal,
+				});
+				const data = await res.json();
 
-    if(selectedConversation?._id) getMessages();
+				if (!res.ok) {
+					throw new Error(data.error || "Failed to load messages");
+				}
 
-   },[selectedConversation?._id,setMessages])
+				setMessages(data);
+			} catch (error) {
+				if (error.name !== "AbortError") {
+					toast.error(error.message);
+				}
+			} finally {
+				setLoading(false);
+			}
+		};
 
-   return {loading,messages};
-}
+		getMessages();
 
-export default useGetMessages
+		return () => controller.abort();
+	}, [selectedConversation?._id, setMessages]);
+
+	return { loading, messages };
+};
+
+export default useGetMessages;
