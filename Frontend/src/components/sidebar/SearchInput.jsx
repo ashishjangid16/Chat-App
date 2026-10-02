@@ -33,17 +33,17 @@ const SearchInput = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className='flex items-center gap-3 px-2'>
+		<form onSubmit={handleSubmit} className='flex items-center gap-2 sm:gap-3 px-2'>
 			<input
 				type='text'
 				placeholder='Search...'
-				className='input input-bordered rounded-full h-16 text-xl flex-1 min-w-0 bg-gray-700 border-2 border-gray-600 text-white placeholder-gray-400 px-6'
+				className='input input-bordered rounded-full h-12 sm:h-14 md:h-16 text-sm sm:text-base md:text-lg flex-1 min-w-0 bg-gray-700 border-2 border-gray-600 text-white placeholder-gray-400 px-4 sm:px-5 md:px-6'
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}
 			/>
 
-			<button type='submit' className='btn btn-circle bg-sky-500 text-white hover:bg-sky-600 h-14 w-14 min-h-14 flex-shrink-0'>
-				<IoSearchSharp className='w-8 h-8 outline-none' />
+			<button type='submit' className='btn btn-circle bg-sky-500 text-white hover:bg-sky-600 h-12 sm:h-14 md:h-16 w-12 sm:w-14 md:w-16 min-h-12 sm:min-h-14 md:min-h-16 flex-shrink-0'>
+				<IoSearchSharp className='w-5 sm:w-6 md:w-8 h-5 sm:h-6 md:h-8 outline-none' />
 			</button>
 		</form>
 	);

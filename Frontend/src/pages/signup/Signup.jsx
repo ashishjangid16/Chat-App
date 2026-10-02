@@ -24,9 +24,9 @@ const Signup = () => {
         await signup(inputs);
     }
   return (
-    <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
-        <div className='w-full p-6 rounded-lg shadow-md bg-gray-800 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50'>
-            <h1 className='text-3xl font-semibold text-center text-gray-100'>
+    <div className='flex flex-col items-center justify-center w-full max-w-md mx-auto px-4'>
+        <div className='w-full p-4 sm:p-6 rounded-lg shadow-md bg-gray-800 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50'>
+            <h1 className='text-2xl sm:text-3xl font-semibold text-center text-gray-100'>
                 SignUp <span className='text-blue-500'>ChatApp</span>
             </h1>
 

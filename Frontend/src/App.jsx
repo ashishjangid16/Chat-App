@@ -14,7 +14,7 @@ function App() {
   const { authUser } = authContext;
 
   return (
-    <div className={authUser ? 'h-screen' : 'p-4 h-screen flex items-center justify-center'}>
+    <div className={authUser ? 'h-screen w-screen overflow-hidden' : 'p-4 min-h-screen flex items-center justify-center'}>
       <Routes>
         <Route path='/' element={authUser ? <Home /> : <Navigate to={"/login"} />} />
         <Route path='/login' element={authUser ? <Navigate to="/" /> : <Login />} />

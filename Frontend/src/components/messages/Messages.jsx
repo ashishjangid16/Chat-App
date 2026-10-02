@@ -21,7 +21,7 @@ const Messages = () => {
 	}, [messages]);
 
 	return (
-		<div className='px-4 flex-1 overflow-auto'>
+		<div className='px-2 sm:px-3 md:px-4 flex-1 overflow-auto'>
 			{loading &&
 				[...Array(3)].map((_, idx) => (
 					<div key={idx}>

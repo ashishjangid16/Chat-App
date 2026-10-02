@@ -1,28 +1,14 @@
 {
   "name": "chat-app",
+  "private": true,
   "version": "1.0.0",
-  "main": "server.js",
   "scripts": {
-    "dev": "nodemon Backend/server.js",
-    "server": "nodemon Backend/server.js",
-    "start": "node Backend/server.js",
-    "build": "npm install && npm install --prefix Frontend && npm run build --prefix Frontend"
+    "setup": "npm install --prefix Backend && npm install --prefix Frontend",
+    "dev": "npm run dev --prefix Backend",
+    "server": "npm run dev --prefix Backend",
+    "client": "npm run dev --prefix Frontend",
+    "start": "npm run start --prefix Backend",
+    "build": "npm run build --prefix Frontend"
   },
-  "type": "module",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.7",
-    "dotenv": "^16.6.1",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.18.1",
-    "save-dev": "^0.0.1-security",
-    "socket.io": "^4.8.1"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
-  }
+  "type": "module"
 }

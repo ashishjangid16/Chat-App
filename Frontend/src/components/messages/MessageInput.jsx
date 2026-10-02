@@ -18,14 +18,14 @@ const MessageInput = () => {
 			<div className='w-full relative'>
 				<input
 					type='text'
-					className='border-2 text-xl rounded-lg block w-full p-5 pr-14 bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-sky-500 focus:border-sky-500'
+					className='border-2 text-sm sm:text-base md:text-lg rounded-lg block w-full p-3 sm:p-4 md:p-5 pr-12 sm:pr-14 bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-sky-500 focus:border-sky-500'
 					placeholder='Send a message...'
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
 					disabled={loading}
 				/>
-				<button type='submit' className='absolute inset-y-0 end-0 flex items-center pe-4' disabled={loading}>
-					{loading ? <div className='loading loading-spinner w-7 h-7' /> : <BsSend className='w-7 h-7 text-sky-500 hover:text-sky-400' />}
+				<button type='submit' className='absolute inset-y-0 end-0 flex items-center pe-3 sm:pe-4' disabled={loading}>
+					{loading ? <div className='loading loading-spinner w-5 sm:w-6 md:w-7 h-5 sm:h-6 md:h-7' /> : <BsSend className='w-5 sm:w-6 md:w-7 h-5 sm:h-6 md:h-7 text-sky-500 hover:text-sky-400' />}
 				</button>
 			</div>
 		</form>

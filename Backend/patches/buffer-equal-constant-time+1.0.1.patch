@@ -1,0 +1,10 @@
+diff --git a/node_modules/buffer-equal-constant-time/index.js b/node_modules/buffer-equal-constant-time/index.js
+--- a/node_modules/buffer-equal-constant-time/index.js
++++ b/node_modules/buffer-equal-constant-time/index.js
+@@ -1,5 +1,5 @@
+ /*jshint node:true */
+ 'use strict';
+ var Buffer = require('buffer').Buffer; // browserify
+-var SlowBuffer = require('buffer').SlowBuffer;
++var SlowBuffer = require('buffer').SlowBuffer || Buffer;
+ 
